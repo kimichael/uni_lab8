@@ -16,7 +16,7 @@ namespace Lab8
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Библиотека());
+            Application.Run(new Library());
         }
     }
 }

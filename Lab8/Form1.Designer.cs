@@ -1,6 +1,6 @@
 ﻿namespace Lab8
 {
-    partial class Библиотека
+    partial class Library
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -57,8 +57,8 @@
             this.publisher_Search_Label = new System.Windows.Forms.TextBox();
             this.publisher_Search = new System.Windows.Forms.TextBox();
             this.return_Search = new System.Windows.Forms.CheckBox();
-            this.reservationsList = new System.Windows.Forms.ListBox();
             this.delete_button = new System.Windows.Forms.Button();
+            this.reservationsList = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1666,6 +1666,17 @@
             this.return_Search.UseVisualStyleBackColor = true;
             this.return_Search.CheckedChanged += new System.EventHandler(this.return_Search_CheckedChanged);
             // 
+            // delete_button
+            // 
+            this.delete_button.Location = new System.Drawing.Point(965, 117);
+            this.delete_button.Name = "delete_button";
+            this.delete_button.Size = new System.Drawing.Size(75, 23);
+            this.delete_button.TabIndex = 2;
+            this.delete_button.Text = "Удалить";
+            this.delete_button.UseVisualStyleBackColor = true;
+            this.delete_button.Visible = false;
+            this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
+            // 
             // reservationsList
             // 
             this.reservationsList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1678,18 +1689,7 @@
             this.reservationsList.TabIndex = 4;
             this.reservationsList.SelectedIndexChanged += new System.EventHandler(this.reservationsList_SelectedIndexChanged);
             // 
-            // delete_button
-            // 
-            this.delete_button.Location = new System.Drawing.Point(965, 117);
-            this.delete_button.Name = "delete_button";
-            this.delete_button.Size = new System.Drawing.Size(75, 23);
-            this.delete_button.TabIndex = 2;
-            this.delete_button.Text = "Удалить";
-            this.delete_button.UseVisualStyleBackColor = true;
-            this.delete_button.Visible = false;
-            this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
-            // 
-            // Библиотека
+            // Library
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1697,8 +1697,8 @@
             this.Controls.Add(this.reservationsList);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(1314, 520);
-            this.Name = "Библиотека";
-            this.Text = "Form1";
+            this.Name = "Library";
+            this.Text = "Библиотека";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Библиотека_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

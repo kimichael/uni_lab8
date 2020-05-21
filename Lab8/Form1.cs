@@ -14,7 +14,7 @@ using System.Xml.Linq;
 
 namespace Lab8
 {
-    public partial class Библиотека : Form
+    public partial class Library : Form
     {
 
         private XDocument xdoc;
@@ -23,7 +23,7 @@ namespace Lab8
 
         List<BookReservationRecord> filteredRecords = new List<BookReservationRecord>();
 
-        public Библиотека()
+        public Library()
         {
             InitializeComponent();
         }

@@ -157,8 +157,12 @@ namespace Lab8
                         cost.Value
                     );
             }
-            catch (FormatException exception) {
+            catch (FormatException exception)
+            {
                 throw new ArgumentException("Wrong string format");
+            }
+            catch (NullReferenceException exception) { 
+                throw new ArgumentException("Missing field");
             }
             
         }
