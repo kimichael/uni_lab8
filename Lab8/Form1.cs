@@ -17,15 +17,13 @@ namespace Lab8
     public partial class Library : Form
     {
 
-        private XDocument xdoc;
-
-        List<BookReservationRecord> records = new List<BookReservationRecord>();
-
-        List<BookReservationRecord> filteredRecords = new List<BookReservationRecord>();
+        private RecordsController controller;
 
         public Library()
         {
             InitializeComponent();
+
+            controller = new RecordsController();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -34,59 +32,15 @@ namespace Lab8
         }
 
         private void loadReservations() {
-            var filename = "reservations.xml";
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var reservationsFile = Path.Combine(currentDirectory, filename);
-            if (!File.Exists(reservationsFile))
-            {
-                XDocument doc = new XDocument(
-                        new XElement(BookReservationRecord.RESERVATIONS_TAG, XElement.EmptySequence)
-                    );
-                doc.Save(reservationsFile);
-            }
 
-            try {
-                XDocument xdoc = XDocument.Load(reservationsFile);
-                XElement recordsElement = xdoc.Root;
-                var elements = xdoc.Element(BookReservationRecord.RESERVATIONS_TAG).Elements("BookReservation");
-
-                try
-                {
-                    foreach (XElement xelement in elements)
-                    {
-                        var record = BookReservationRecord.fromXElement(xelement);
-                        records.Add(record);
-                        filteredRecords.Add(record);
-                    }
-                }
-                catch (ArgumentException exception)
-                {
-                    MessageBox.Show("Неправильный формат файла", "Ошибка");
-                }
-            } catch (XmlException exception) {
-                MessageBox.Show("XML файл поврежден", "Ошибка");
-            }
-            
+            controller.loadReservationFile();
 
             filterRecords();
         }
 
         private void saveToXML()
         {
-            var filename = "reservations.xml";
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var reservationsFile = Path.Combine(currentDirectory, filename);
-            
-            List<XElement> xelements = new List<XElement>();
-            foreach (BookReservationRecord record in records) {
-                xelements.Add(record.toXElement());
-            }
-
-            XDocument doc = new XDocument(
-                    new XElement(BookReservationRecord.RESERVATIONS_TAG, xelements)
-                );
-            doc.Save(reservationsFile);
-           
+            controller.saveToXML();
         }
 
         private void add_button_Click(object sender, EventArgs e)
@@ -156,13 +110,13 @@ namespace Lab8
                 cost
             );
 
-            records.Add(record);
+            controller.addRecord(record);
             updateList();
         }
 
         private void updateList() {
             reservationsList.Items.Clear();
-            foreach (BookReservationRecord record in filteredRecords) {
+            foreach (BookReservationRecord record in controller.getFilteredRecords()) {
                 reservationsList.Items.Add(record.getRepresentationString());
             }
         }
@@ -188,11 +142,7 @@ namespace Lab8
         }
 
         private void filterRecords() {
-            filteredRecords = records.FindAll(record =>
-            record.containsTicketNumber(ticketNumber_Search.Text) &&
-            record.containsAuthor(author_Search.Text) &&
-            record.containsPublisher(publisher_Search.Text) &&
-            ((return_Search.Checked && record.IsExpired()) || (!return_Search.Checked && !record.IsExpired())));
+            controller.filterRecords(ticketNumber_Search.Text, author_Search.Text, publisher_Search.Text, return_Search.Checked);
             updateList();
         }
 
@@ -218,11 +168,7 @@ namespace Lab8
 
         private void delete_button_Click(object sender, EventArgs e)
         {
-            List<BookReservationRecord> selectedRecords = new List<BookReservationRecord>();
-            foreach (int index in reservationsList.SelectedIndices) {
-                selectedRecords.Add(filteredRecords[index]);
-            }
-            records = records.FindAll(record => !selectedRecords.Contains(record));
+            controller.deleteRecords(reservationsList.SelectedIndices);
             filterRecords();
             saveToXML();
         }
