@@ -28,12 +28,22 @@ namespace Lab8
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            loadReservations();
+            try
+            {
+                loadReservations();
+            }
+            catch (ArgumentException exception)
+            {
+                MessageBox.Show("Неправильный формат файла", "Ошибка");
+            }
+            catch {
+                MessageBox.Show("XML файл поврежден", "Ошибка");
+            }
         }
 
         private void loadReservations() {
 
-            controller.loadReservationFile();
+            controller.loadReservationFile("");
 
             filterRecords();
         }
@@ -97,21 +107,28 @@ namespace Lab8
                 string publisher,
                 int cost
             ) {
-            var record = new BookReservationRecord(
-                ticketNumber,
-                readerFirstName,
-                readerSecondName,
-                DateTime.Parse(takeoutDate),
-                returnDays,
-                author,
-                name,
-                publishYear,
-                publisher,
-                cost
-            );
+            try
+            {
+                var record = new BookReservationRecord(
+                    ticketNumber,
+                    readerFirstName,
+                    readerSecondName,
+                    DateTime.Parse(takeoutDate),
+                    returnDays,
+                    author,
+                    name,
+                    publishYear,
+                    publisher,
+                    cost
+                );
 
-            controller.addRecord(record);
-            updateList();
+                controller.addRecord(record);
+                updateList();
+            }
+            catch (FormatException exception)
+            {
+                MessageBox.Show("Неверный формат записи", "Ошибка");
+            }
         }
 
         private void updateList() {

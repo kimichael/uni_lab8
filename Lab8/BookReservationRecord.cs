@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Lab8
 {
-    class BookReservationRecord
+    public class BookReservationRecord
     {
 
         public const string RESERVATIONS_TAG = "reservations";

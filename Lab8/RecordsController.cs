@@ -9,15 +9,15 @@ using static System.Windows.Forms.ListBox;
 
 namespace Lab8
 {
-    class RecordsController
+    public class RecordsController
     {
 
         List<BookReservationRecord> records = new List<BookReservationRecord>();
 
         List<BookReservationRecord> filteredRecords = new List<BookReservationRecord>();
 
-        public void loadReservationFile() {
-            var filename = "reservations.xml";
+        public void loadReservationFile(string postfix) {
+            var filename = $"reservations{postfix}.xml";
             var currentDirectory = Directory.GetCurrentDirectory();
             var reservationsFile = Path.Combine(currentDirectory, filename);
             if (!File.Exists(reservationsFile))
@@ -41,6 +41,11 @@ namespace Lab8
                 }
             }
 
+        public List<BookReservationRecord> getRecords()
+        {
+            return records;
+        }
+
         internal void saveToXML()
         {
             var filename = "reservations.xml";
@@ -59,7 +64,7 @@ namespace Lab8
             doc.Save(reservationsFile);
         }
 
-        internal void filterRecords(string ticketNumber, string author, string publisher, bool isReturn)
+        public void filterRecords(string ticketNumber, string author, string publisher, bool isReturn)
         {
             filteredRecords = records.FindAll(record =>
             record.containsTicketNumber(ticketNumber) &&
@@ -83,7 +88,7 @@ namespace Lab8
             records.Add(record);
         }
 
-        internal IEnumerable<BookReservationRecord> getFilteredRecords()
+        public List<BookReservationRecord> getFilteredRecords()
         {
             return filteredRecords;
         }
